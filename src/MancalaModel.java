@@ -26,11 +26,25 @@ public class MancalaModel {
     }
 
     /**
-     *
-     * @param pit
+     * Makes a move from the selected pit.
+     * @param selected index of selected pit
      */
-    public void move(int pit) {
+    public void selectPit(int selected) {
         lastState = pits; //saves the state of game before move is made
+        undos = 3;
+        int count = pits[selected];
+        pits[selected] = 0;
+        int index = selected;
+
+        for(int i = count; i > 0; i--) {
+            index = (index +1) % 14;
+            if((player1Turn && index == 13) || (!player1Turn && index == 6)) {
+                continue;
+            }
+            //adds stone to pit if not opponent mancala
+            pits[index]++;
+            count--;
+        }
     }
 
     /**
