@@ -124,4 +124,47 @@ public class MancalaView extends JPanel implements PropertyChangeListener {
         g2.dispose();
     }
 
+private void drawPit(Graphics2D g2, Rectangle r, String label, int stones){
+        g2.setColor(style.pitColor());
+        Shape s = style.pitShape(r.x, r.y, r.width, r.height);
+        g2.fill(s);
+        g2.setColor(Color.BLACK);
+        g2.draw(s);
+
+        // label
+        g2.setFont(style.labelFont());
+        g2.drawString(label, r.x + 6, r.y + 18);
+
+        // stones (simple small circles)
+        drawStones(g2, r, stones);
+    }
+
+    private void drawStore(Graphics2D g2, Rectangle r, char who, int stones){
+        g2.setColor(style.storeColor());
+        Shape s = style.storeShape(r.x, r.y, r.width, r.height);
+        g2.fill(s);
+        g2.setColor(Color.BLACK);
+        g2.draw(s);
+
+        g2.setFont(style.labelFont());
+        g2.drawString(String.valueOf(who), r.x + r.width/2 - 4, r.y + 16);
+
+        drawStones(g2, r, stones);
+    }
+
+    private void drawStones(Graphics2D g2, Rectangle r, int n){
+        g2.setColor(style.stoneColor());
+        int d = 12, pad = 5;
+        int cols = Math.max(1, (r.width - pad)/(d+pad));
+        int x = r.x + pad, y = r.y + 24;
+        for (int i=0;i<n;i++){
+            g2.fillOval(x, y, d, d);
+            x += d + pad;
+            if (x + d > r.x + r.width - pad){
+                x = r.x + pad;
+                y += d + pad;
+                if (y + d > r.y + r.height - pad) break; // clip if too many
+            }
+        }
+    }
 }
