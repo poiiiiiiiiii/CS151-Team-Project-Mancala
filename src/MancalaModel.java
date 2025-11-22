@@ -42,6 +42,11 @@ public class MancalaModel {
         for (int i = 7; i < 13; i++) {
             pits[i] = stones; // add stones to Player 2 pit
         }
+        player1Turn = true;
+        undoCount = 0;
+        lastUndoCount = 0;
+        lastPitState = null;
+        lastTurn = false;
         notifyListeners();
     }
 
