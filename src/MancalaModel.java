@@ -20,6 +20,8 @@ public class MancalaModel {
     private int[] lastPitState;
     private ArrayList<ChangeListener> listeners;
 
+    public static final int A_STORE = 6;
+    public static final int B_STORE = 13;
 
     /**
      *
