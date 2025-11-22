@@ -5,16 +5,19 @@
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
  */
 public class MancalaModel {
     private boolean player1Turn;
+    private boolean lastTurn;
     private static final int MAX_UNDOS = 3;
     private int undoCount;
+    private int lastUndoCount;
     private int[] pits;
-    private int[] lastState;
+    private int[] lastPitState;
     private ArrayList<ChangeListener> listeners;
 
 
@@ -28,7 +31,7 @@ public class MancalaModel {
         listeners = new ArrayList<>();
     }
 
-    public void initialize(int stones) {
+    public void newGame(int stones) {
         pits[6] = 0; //Player 1 Mancala 0 stones
         pits[13] = 0; // Player 2 Mancala 0 stones
         for (int i = 0; i < 6; i++) {
@@ -45,7 +48,9 @@ public class MancalaModel {
      * @param selected index of selected pit
      */
     public void move(int selected) {
-        lastState = pits.clone(); //saves the state of game before move is made
+        lastTurn = player1Turn;
+        lastUndoCount = undoCount;
+        lastPitState = pits.clone(); //saves the state of game before move is made
         int count = pits[selected];
         pits[selected] = 0;
         int index = selected;
@@ -72,6 +77,7 @@ public class MancalaModel {
         if((player1Turn && index == 6) || (!player1Turn && index ==  13)) {
             notifyListeners();
         } else {
+            undoCount = 0;
             player1Turn = !player1Turn;
             notifyListeners();
         }
@@ -133,12 +139,16 @@ public class MancalaModel {
     /**
      * undoes the players move if the player has undos left on that turn
      */
-    public void undo() {
-        if ((undoCount < MAX_UNDOS) && (pits != lastState)) {
-            pits = lastState;
+    public boolean undo() {
+        if ((lastUndoCount < MAX_UNDOS) && (!Arrays.equals(pits, lastPitState))) {
+            undoCount = lastUndoCount;
+            player1Turn = lastTurn;
+            pits = lastPitState.clone();
             undoCount++;
             notifyListeners();
+            return true;
         }
+        return false;
     }
 
     // Accessors

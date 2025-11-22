@@ -18,7 +18,7 @@ import java.util.List;
 
 public class MancalaView extends JPanel implements PropertyChangeListener {
     private final MancalaModel model;
-    private BoardStyle style;
+    private MancalaBoardStyle style;
 
     private final List<Rectangle> pitBounds = new ArrayList<>(14); // click regions
 
@@ -27,7 +27,7 @@ public class MancalaView extends JPanel implements PropertyChangeListener {
     private static final int PIT_W = 70, PIT_H = 70, STORE_W = 70, STORE_H = 160;
     private static final int GAP = 16;
 
-    public MancalaView(MancalaModel model, BoardStyle style) {
+    public MancalaView(MancalaModel model, MancalaBoardStyle style) {
         this.model = model;
         this.style = style;
         setBackground(style.boardColor());
@@ -46,7 +46,7 @@ public class MancalaView extends JPanel implements PropertyChangeListener {
         });
     }
 
-    public void setStyle(BoardStyle style) {
+    public void setStyle(MancalaBoardStyle style) {
         this.style = style;
         setBackground(style.boardColor());
         repaint();

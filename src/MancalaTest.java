@@ -15,11 +15,11 @@ public class MancalaTest {
             MancalaModel model = new MancalaModel();
 
             // Choose style (Strategy)
-            BoardStyle classic = new ClassicStyle();
-            BoardStyle ocean   = new OceanStyle();
+            MancalaBoardStyle classic = new ClassicStyle();
+            MancalaBoardStyle ocean   = new OceanStyle();
 
             MancalaView view = new MancalaView(model, classic);
-            model.addPropertyChangeListener(view);
+            model.attach(view);
 
             JFrame f = new JFrame("Mancala — CS151");
             f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.geom.Ellipse2D;
 
-public interface BoardStyle {
+public interface MancalaBoardStyle {
     Color boardColor();
     Color pitColor();
     Color storeColor();
@@ -19,7 +19,7 @@ public interface BoardStyle {
 }
 
 // Two example styles
-class ClassicStyle implements BoardStyle {
+class ClassicStyle implements MancalaBoardStyle {
     public Color boardColor(){ return new Color(222, 201, 158); }
     public Color pitColor(){ return new Color(184, 138, 79); }
     public Color storeColor(){ return new Color(164, 118, 59); }
@@ -27,7 +27,7 @@ class ClassicStyle implements BoardStyle {
     public Font  labelFont(){ return new Font("SansSerif", Font.BOLD, 14); }
 }
 
-class OceanStyle implements BoardStyle {
+class OceanStyle implements MancalaBoardStyle {
     public Color boardColor(){ return new Color(212, 235, 248); }
     public Color pitColor(){ return new Color(88, 156, 215); }
     public Color storeColor(){ return new Color(60, 123, 190); }
