@@ -155,16 +155,22 @@ public class MancalaView extends JPanel implements ChangeListener {
     private void drawStones(Graphics2D g2, Rectangle r, int n){
         g2.setColor(style.stoneColor());
         int d = 12, pad = 5;
-        int cols = Math.max(1, (r.width - pad)/(d+pad));
-        int x = r.x + pad, y = r.y + 24;
-        for (int i=0;i<n;i++){
-            g2.fillOval(x, y, d, d);
-            x += d + pad;
-            if (x + d > r.x + r.width - pad){
-                x = r.x + pad;
-                y += d + pad;
-                if (y + d > r.y + r.height - pad) break; // clip if too many
+        if(n <= 6) {
+            int cols = Math.max(1, (r.width - pad)/(d+pad));
+            int x = r.x + pad, y = r.y + 24;
+            for (int i=0;i<n;i++){
+                g2.fillOval(x, y, d, d);
+                x += d + pad;
+                if (x + d > r.x + r.width - pad){
+                    x = r.x + pad;
+                    y += d + pad;
+                    if (y + d > r.y + r.height - pad) break; // clip if too many
+                }
             }
+        } else {
+            g2.setFont(style.labelFont());
+            g2.drawString(String.valueOf(n), r.x + r.width/2 - 4, r.y + 40);
         }
+
     }
 }
