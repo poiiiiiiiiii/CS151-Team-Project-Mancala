@@ -7,16 +7,16 @@
  */
 // MancalaView.java
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Shape;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MancalaView extends JPanel implements PropertyChangeListener {
+public class MancalaView extends JPanel implements ChangeListener {
     private final MancalaModel model;
     private MancalaBoardStyle style;
 
@@ -83,10 +83,10 @@ public class MancalaView extends JPanel implements PropertyChangeListener {
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void stateChanged(ChangeEvent evt) {
         repaint();
-        if (MancalaModel.P_DONE.equals(evt.getPropertyName())) {
-            JOptionPane.showMessageDialog(this, String.valueOf(evt.getNewValue()),
+        if (model.isGameOver()) {
+            JOptionPane.showMessageDialog(this, model.getWinner(),
                     "Game Over", JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -124,7 +124,7 @@ public class MancalaView extends JPanel implements PropertyChangeListener {
         g2.dispose();
     }
 
-private void drawPit(Graphics2D g2, Rectangle r, String label, int stones){
+    private void drawPit(Graphics2D g2, Rectangle r, String label, int stones){
         g2.setColor(style.pitColor());
         Shape s = style.pitShape(r.x, r.y, r.width, r.height);
         g2.fill(s);
