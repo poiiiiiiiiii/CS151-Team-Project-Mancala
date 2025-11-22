@@ -71,11 +71,11 @@ public class MancalaModel {
             count--;
         }
         // Captures opposite side if lands on empty pit on player side
-        if(player1Turn && index >= 0 && index <= 5 && pits[index]==1) {
+        if(player1Turn && index >= 0 && index <= 5 && pits[index]==1 && pits[12-index] > 0) {
             pits[6] += pits[12-index] + 1;
             pits[index] = 0;
             pits[12-index] = 0;
-        } else if(!player1Turn && index >= 7 && index <= 12 && pits[index]==1) {
+        } else if(!player1Turn && index >= 7 && index <= 12 && pits[index]==1 && pits[12-index] > 0) {
             pits[13] += pits[12-index] + 1;
             pits[index] = 0;
             pits[12-index] = 0;
