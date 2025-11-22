@@ -63,16 +63,16 @@ public class MancalaView extends JPanel implements ChangeListener {
             pitBounds.add(new Rectangle(x, yBottom, PIT_W, PIT_H));
         }
         // A store (6) at left
-        pitBounds.add(new Rectangle(PAD, PAD, STORE_W, STORE_H));
-
-        // B pits (7..12) left->right along top row (note index order is 7..12)
-        for (int i = 0; i < 6; i++) {
-            int x = x0 + i * (PIT_W + GAP);
-            pitBounds.add(new Rectangle(x, yTop, PIT_W, PIT_H));
-        }
-        // B store (13) at right
         int rightX = x0 + 6 * (PIT_W + GAP);
         pitBounds.add(new Rectangle(rightX, PAD, STORE_W, STORE_H));
+
+        // B pits (7..12) right->left along top row (note index order is 7..12)
+        for (int i = 0; i < 6; i++) {
+            int x = x0 + (5 - i) * (PIT_W + GAP);
+            pitBounds.add(new Rectangle(x, yTop, PIT_W, PIT_H));
+        }
+        // B store (13) at left
+        pitBounds.add(new Rectangle(PAD, PAD, STORE_W, STORE_H));
     }
 
     private int hitTest(int mx, int my) {
