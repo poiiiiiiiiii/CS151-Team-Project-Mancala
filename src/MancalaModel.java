@@ -147,7 +147,7 @@ public class MancalaModel {
      * undoes the players move if the player has undos left on that turn
      */
     public boolean undo() {
-        if ((lastUndoCount < MAX_UNDOS) && (!Arrays.equals(pits, lastPitState))) {
+        if ((lastUndoCount < MAX_UNDOS) && (!Arrays.equals(pits, lastPitState)) && (lastPitState != null)) {
             undoCount = lastUndoCount;
             player1Turn = lastTurn;
             pits = lastPitState.clone();
