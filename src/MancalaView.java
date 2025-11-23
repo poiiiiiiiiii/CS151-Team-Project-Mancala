@@ -131,9 +131,11 @@ public class MancalaView extends JPanel implements ChangeListener {
         g2.setColor(Color.BLACK);
         g2.draw(s);
 
-        // label
+        // label (centered)
         g2.setFont(style.labelFont());
-        g2.drawString(label, r.x + 6, r.y + 18);
+        int labelWidth = g2.getFontMetrics().stringWidth(label);
+        int labelX = r.x + (r.width - labelWidth) / 2;
+        g2.drawString(label, labelX, r.y + 18);
 
         // stones (simple small circles)
         drawStones(g2, r, stones);
