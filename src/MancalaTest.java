@@ -18,12 +18,21 @@ public class MancalaTest {
             MancalaBoardStyle classic = new ClassicStyle();
             MancalaBoardStyle ocean   = new OceanStyle();
 
-            MancalaView view = new MancalaView(model, classic);
-            model.attach(view);
-
             JFrame f = new JFrame("Mancala — CS151");
             f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             f.setLayout(new BorderLayout());
+
+            // Show initialization dialog on startup
+            MancalaInitDialog initialDialog = MancalaInitDialog.showDialog(f);
+            if (initialDialog == null) {
+                // User cancelled, exit
+                System.exit(0);
+                return;
+            }
+
+            MancalaView view = new MancalaView(model, initialDialog.getSelectedStyle());
+            model.attach(view);
+            model.newGame(initialDialog.getStones());
 
             // Toolbar
             JToolBar tb = new JToolBar(); tb.setFloatable(false);
@@ -43,14 +52,10 @@ public class MancalaTest {
 
             // Actions
             btnNew.addActionListener(e -> {
-                String s = JOptionPane.showInputDialog(f, "Stones per pit (3 or 4):", "3");
-                if (s==null) return;
-                try {
-                    int v = Integer.parseInt(s.trim());
-                    if (v==3 || v==4) model.newGame(v);
-                    else JOptionPane.showMessageDialog(f, "Enter 3 or 4.");
-                } catch (NumberFormatException ex){
-                    JOptionPane.showMessageDialog(f, "Enter 3 or 4.");
+                MancalaInitDialog configDialog = MancalaInitDialog.showDialog(f);
+                if (configDialog != null) {
+                    view.setStyle(configDialog.getSelectedStyle());
+                    model.newGame(configDialog.getStones());
                 }
             });
 
@@ -62,9 +67,6 @@ public class MancalaTest {
 
             btnClassic.addActionListener(e -> view.setStyle(classic));
             btnOcean.addActionListener(e -> view.setStyle(ocean));
-
-            // Start with a prompt
-            model.newGame(3);
 
             f.pack();
             f.setLocationRelativeTo(null);
