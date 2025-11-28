@@ -1,3 +1,12 @@
+/**
+ * The MancalaInitDialog class provides a modal dialog used to configure the 
+ * initial settings of a new Mancala game. The dialog allows the user to select 
+ * the number of stones per pit (3 or 4) and choose a board style 
+ * (Classic or Ocean).These values can be retrieved by the caller to initialize
+ * once the user confirms their choices, the game model.
+ * @author Kaydon Do, Rongjie Mai, Sarah Hoang
+ * @version 1.0
+ */
 import javax.swing.*;
 import java.awt.*;
 
@@ -6,6 +15,12 @@ public class MancalaInitDialog extends JDialog {
     private MancalaBoardStyle selectedStyle = new ClassicStyle();
     private boolean confirmed = false;
 
+/**
+     * Constructs a new initialization dialog attached to the given parent frame.
+     * The dialog provides radio button options for stone count and board style,
+     * as well as OK/Cancel controls.
+     * parent the parent JFrame that owns this dialog
+     */   
     public MancalaInitDialog(JFrame parent) {
         super(parent, "New Game Setup", true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -71,10 +86,17 @@ public class MancalaInitDialog extends JDialog {
         setLocationRelativeTo(parent);
     }
 
+    /**
+     * Returns true if the user pressed the OK button to confirm their selections.
+     * return true if the dialog was confirmed; false otherwise
+     */
     public boolean isConfirmed() {
         return confirmed;
     }
-
+/**
+     * Returns the number of stones per pit selected by the user.
+     * return the selected stone count (3 or 4)
+     */
     public int getStones() {
         return stones;
     }
@@ -82,6 +104,12 @@ public class MancalaInitDialog extends JDialog {
     public MancalaBoardStyle getSelectedStyle() {
         return selectedStyle;
     }
+    /**
+     * Displays the initialization dialog and returns it only if the user confirms 
+     * their choices. If the user cancels, null is returned.
+     * parent the parent JFrame
+     * return the MancalaInitDialog instance if confirmed; otherwise null
+     */
 
     public static MancalaInitDialog showDialog(JFrame parent) {
         MancalaInitDialog dialog = new MancalaInitDialog(parent);
