@@ -7,6 +7,7 @@
  * @author Kaydon Do, Rongjie Mai, Sarah Hoang
  * @version 1.0
  */
+// MancalaInitDialog.java
 import javax.swing.*;
 import java.awt.*;
 
