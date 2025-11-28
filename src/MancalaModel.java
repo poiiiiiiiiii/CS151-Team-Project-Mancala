@@ -6,7 +6,7 @@
  * @author Kaydon Do, Rongjie Mai, Sarah Hoang
  * @version 1.0
  */
-//MancalaModel
+//MancalaModel.java
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.util.ArrayList;
@@ -29,9 +29,7 @@ public class MancalaModel {
     public static final int A_STORE = 6;
     public static final int B_STORE = 13;
 
-    /**
-     *
-     */
+
     public MancalaModel () {
         player1Turn = true;
         undoCount = 0;
