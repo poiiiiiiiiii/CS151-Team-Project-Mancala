@@ -197,8 +197,8 @@ public class MancalaView extends JPanel implements ChangeListener {
      * as circular markers arranged in rows. For larger counts, the total number is 
      * displayed as text instead to avoid cluttering the pit visually.
      * g2 the Graphics2D context
-     * r  the rectangle representing the pit or store region
-     * n  the number of stones to draw
+     * r is the rectangle representing the pit or store region
+     * n is the number of stones to draw
      */
     private void drawStones(Graphics2D g2, Rectangle r, int n){
         g2.setColor(style.stoneColor());
