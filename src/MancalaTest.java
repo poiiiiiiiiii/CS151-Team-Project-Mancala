@@ -1,15 +1,23 @@
 /**
- *
- */
-
-/**
- *
+ * The MancalaTest class serves as the entry point for launching the Mancala game
+ * application. It initializes the MVC components — the model, view, and UI controls —
+ * and displays the game window. This class also handles style selection, starting
+ * new games, and coordinating user interactions such as undoing moves.
+ * @author Kaydon Do, Rongjie Mai, Sarah Hoang
+ * @version 1.0
  */
 // MancalaTest.java
 import javax.swing.*;
 import java.awt.*;
 
 public class MancalaTest {
+    /**
+     * Launches the Mancala game UI. This method constructs the game model,
+     * initializes the view using the user's selected style and stone count,
+     * and sets up toolbar controls for starting a new game, undoing moves,
+     * and switching board styles.
+     * args command-line arguments (unused)
+     */
     public static void main(String[] args){
         SwingUtilities.invokeLater(() -> {
             MancalaModel model = new MancalaModel();
@@ -49,8 +57,7 @@ public class MancalaTest {
 
             f.add(tb, BorderLayout.NORTH);
             f.add(view, BorderLayout.CENTER);
-
-            // Actions
+            // New game action
             btnNew.addActionListener(e -> {
                 MancalaInitDialog configDialog = MancalaInitDialog.showDialog(f);
                 if (configDialog != null) {
@@ -58,16 +65,16 @@ public class MancalaTest {
                     model.newGame(configDialog.getStones());
                 }
             });
-
+            // Undo action
             btnUndo.addActionListener(e -> {
                 if (!model.undo()){
                     JOptionPane.showMessageDialog(f, "Cannot undo now (max 3 per turn, and not twice in a row).");
                 }
             });
-
+            // Change board style dynamically
             btnClassic.addActionListener(e -> view.setStyle(classic));
             btnOcean.addActionListener(e -> view.setStyle(ocean));
-
+            // Display window
             f.pack();
             f.setLocationRelativeTo(null);
             f.setVisible(true);
