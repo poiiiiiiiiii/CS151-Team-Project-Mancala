@@ -6,6 +6,7 @@
  * @author Kaydon Do, Rongjie Mai, Sarah Hoang
  * @version 1.0
  */
+//MancalaModel
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.util.ArrayList;
