@@ -1,15 +1,20 @@
 /**
- *
+ * The MancalaModel class represents the game logic and state of a Mancala game.
+ * It maintains the pit stone counts, tracks the current player's turn,
+ * enforces legal moves, handles captures, free turns, undo functionality,
+ * and determines when the game ends and who wins.
+ * @author Kaydon Do, Rongjie Mai, Sarah Hoang
+ * @version 1.0
  */
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- *
- */
+     * Constructs a new MancalaModel with an empty board and no stones distributed.
+     * The model begins with Player 1's turn and no undos.
+     */
 public class MancalaModel {
     private boolean player1Turn;
     private boolean lastTurn;
@@ -32,7 +37,12 @@ public class MancalaModel {
         pits = new int[14];
         listeners = new ArrayList<>();
     }
-
+    
+   /**
+     * Starts a new Mancala game by distributing the specified number of stones
+     * into each non-Mancala pit and resetting all turn and undo state.
+     * stones the number of stones to place in each pit (typically 3 or 4)
+     */
     public void newGame(int stones) {
         pits[6] = 0; //Player 1 Mancala 0 stones
         pits[13] = 0; // Player 2 Mancala 0 stones
@@ -52,7 +62,7 @@ public class MancalaModel {
 
     /**
      * Makes a move from the selected pit.
-     * @param selected index of selected pit
+     * selected index of selected pit
      */
     public void move(int selected) {
         lastTurn = player1Turn;
@@ -89,6 +99,11 @@ public class MancalaModel {
             notifyListeners();
         }
     }
+    /**
+     * Checks whether the game is over by determining if one player's side
+     * of the board is completely empty.
+     * return true if either side has no stones remaining; false otherwise
+     */
 
     public boolean isGameOver() {
         boolean player1Side = true;
@@ -106,7 +121,10 @@ public class MancalaModel {
         }
         return player1Side||player2Side;
     }
-
+ /**
+     * Computes the final score, determines the winner, and clears the pits.
+     * return a string describing the winning player or a draw
+     */
     public String getWinner() {
         //adds up all stones on player 1 side
         for (int i = 0; i < 6; i++) {
@@ -131,10 +149,10 @@ public class MancalaModel {
         }
     }
 
-    /**
-     *
-     * @param index
-     * @return
+     /**
+     * Determines whether the selected pit is a valid choice for the current player.
+     * index the pit index being checked
+     * return true if the pick is legal; false otherwise
      */
     public Boolean isLegalPick(int index) {
         if ((pits[index] == 0) || (player1Turn && index > 5) || (!player1Turn && (index < 7 || index > 12))) {
@@ -144,7 +162,9 @@ public class MancalaModel {
     }
 
     /**
-     * undoes the players move if the player has undos left on that turn
+     * Attempts to undo the previous move if the player has undos remaining.
+     * Undo restores the board state, the active player, and the undo counter.
+     * return true if the undo was successful; false otherwise
      */
     public boolean undo() {
         if ((lastUndoCount < MAX_UNDOS) && (!Arrays.equals(pits, lastPitState)) && (lastPitState != null)) {
@@ -158,29 +178,32 @@ public class MancalaModel {
         return false;
     }
 
-    // Accessors
+    /**
+     * Returns a string describing whose turn it is.
+     * return "Player 1's Turn" or "Player 2's Turn"
+     */
 
     public String getTurn() {
         if(player1Turn) return "Player 1's Turn";
         else return "Player 2's Turn";
     }
-    /**
-     *
-     * @return
+     /**
+     * Returns the full board array representing all pits and Mancalas.
+     * return an array of pit stone counts
      */
     public int[] getBoard() {
         return pits;
     }
 
     /**
-     *
-     * @return
+     * Returns the number of undos performed in this turn.
+     * return the current undo count
      */
     public int getUndoCount() {
         return undoCount;
     }
     /**
-     * @return true if player 1's turn, false if player 2's turn
+     * return true if player 1's turn, false if player 2's turn
      */
     public boolean isPlayer1Turn() {
         return player1Turn;
@@ -191,7 +214,9 @@ public class MancalaModel {
     public void attach(ChangeListener listener) {
         listeners.add(listener);
     }
-
+    /**
+     * Notifies all registered ChangeListeners that the model state has changed.
+     */
     private void notifyListeners(){
         for (ChangeListener listener : listeners) {
             listener.stateChanged(new ChangeEvent(this));
